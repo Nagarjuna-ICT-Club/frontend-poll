@@ -13,9 +13,8 @@ function App() {
   const [membershipId, setmembershipId] = useState(localStorage.getItem('mid') || "");
   const [askMembershipId, setAskMembershipId] = useState(() => 
   {
-    return localStorage.getItem("mid") && false || true 
-  }
-  );
+    return localStorage.getItem("mid") ? false : true
+  });
   const [midInput, setmidInput] = useState("");
   const [remainingSlots, setRS] = useState(localStorage.getItem('rs') || "100");
   const [userName, setUserName] = useState(localStorage.getItem('name') || "");
@@ -118,7 +117,6 @@ function App() {
           <button onClick={()=>saveMembershipId()} className='border border-solid bg-primary text-[#fff] py-1'>SAVE</button>
         </div>
         </dialog>}
-
       <div className='poll_container'>
         {loading ?  <div> <CustomBackDrop  color = {"white"} /> </div>:
           !askMembershipId && <div className='all_polls'>
