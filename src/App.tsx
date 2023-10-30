@@ -19,8 +19,8 @@ function App() {
   const [userName, setUserName] = useState(localStorage.getItem('name') || "");
   const [showBackDrop, setSBD] = useState(false)
 
-  const url = "https://backend-poll.onrender.com/api";
-  // const url = "http://localhost:3000/api";
+  // const url = "https://backend-poll.onrender.com/api";
+  const url = "http://localhost:3000/api";
   
 
   useEffect(() => {
@@ -70,9 +70,20 @@ function App() {
       id: photoId,
       voter: membershipId
     }
-
     axios.post(url+"/vote",data).then(res=>setPolls(res.data.data))
+  }
 
+  const getName = (id)=>{
+    const _  = members.filter(value=>{
+      if(value["Membership ID"]){
+        // console.log(_refine, String(value["Membership ID"]).split(" ").join("").trim());
+        if(String(value["Membership ID"]).split(" ").join("").trim() == id) return value;
+      }
+    });
+
+    if(_.length>0){
+      return _[0]["Name"]
+    }
   }
 
   return (
@@ -101,7 +112,7 @@ function App() {
               polls.map((vlaue, k) => {
                 return <div key={k} className='poll_card'>
                   <img src={vlaue?.url} />
-                  <h2>Author: {vlaue.author}</h2>
+                  <h2>Author:{getName(vlaue.author)} {vlaue.author}</h2>
                   <h2>Vote Counts: {vlaue.voters.length}</h2>
                   <h2>Uploaded on: {new Date(vlaue.createdAt).toUTCString()}</h2>
                   <div className='card_footer'>
