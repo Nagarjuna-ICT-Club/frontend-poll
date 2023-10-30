@@ -1,0 +1,44 @@
+
+header{
+  display: flex;
+  flex-wrap: wrap;
+  background-color: rgb(36 62 106);
+  color: whitesmoke;
+  padding: 10px 20px;
+}
+
+header .heading_container{
+  flex: 1;
+}
+
+.all_polls{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.poll_card{
+  width: 45vw;
+}
+.poll_card img{
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+.poll_container{
+  margin-top: 50px;
+}
+.vote_button{
+  font-size: 20px;
+  padding: 9px 30px;
+  outline: none;
+  background-color: chartreuse;
+  border: 1px sold black;
+  border-radius: 5px;
+  cursor: pointer;
+}
+button:hover{
+  background-color: black;
+  color: white;
+}
