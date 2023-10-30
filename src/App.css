@@ -38,7 +38,25 @@ header .heading_container{
   border-radius: 5px;
   cursor: pointer;
 }
-button:hover{
+.vote_button:hover{
   background-color: black;
   color: white;
+}
+.votes_count{
+  display: flex;
+  font-size: 20px;
+  padding: 9px 30px;
+  outline: none;
+  background-color: rgb(228, 222, 222);
+  border: none;
+  border-radius: 5px;
+  cursor:auto;
+  gap: 10px;
+  justify-content: center;
+}
+
+.card_footer{
+  display: flex;
+  gap: 16px;
+  align-items: center;
 }

@@ -91,9 +91,10 @@ function App() {
                   <h2>Uploaded on: {new Date(vlaue.createdAt).toUTCString()}</h2>
                   <div className='card_footer'>
                   <button  className="vote_button"onClick={() => makeVote(vlaue.id)}>Vote <i className="ri-heart-add-fill"></i> </button>
-                  <button disabled className='votes_count'>{vlaue.voters.length}Votes
-                  <Levels />
+                  <button disabled className='votes_count'>
                    <i className="ri-heart-2-fill"></i>
+                    {vlaue.voters.length}
+                    <Levels />
                    </button>
                   </div>
                 </div>
