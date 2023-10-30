@@ -1,26 +1,24 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './App.css'
 import axios from 'axios';
-import { Dots, Levels, Spinner } from "react-activity";
+import {  Levels, Sentry, Spinner } from "react-activity";
 import "react-activity/dist/library.css";
 import {members} from "./members";
 import 'remixicon/fonts/remixicon.css'
 
 
 function App() {
-
-
   const [polls, setPolls] = useState([]);
   const [loading, setLoading] = useState(true);
   const [membershipId, setmembershipId] = useState(localStorage.getItem('mid') || "");
-  const [askMembershipId, setAskMembershipId] = useState(false);
+  const [askMembershipId, setAskMembershipId] = useState(true);
   const [midInput, setmidInput] = useState("");
   const [remainingSlots, setRS] = useState(localStorage.getItem('rs') || "100");
   const [userName, setUserName] = useState(localStorage.getItem('name') || "");
   const [showBackDrop, setSBD] = useState(false)
 
-  const url = "https://backend-poll.onrender.com/api";
-  // const url = "http://localhost:3000/api";
+  // const url = "https://backend-poll.onrender.com/api";
+  const url = "http://localhost:3000/api";
   
 
   useEffect(() => {
@@ -75,28 +73,40 @@ function App() {
 
   }
 
+  console.log(askMembershipId)
+
   return (
 
     <>
-      <header>
+      <header className='flex items-center justify-between'>
         <div className='heading_container'>
           <h2>Nagarjuna ICT Club - Photography Contest</h2>
         </div>
-        <div className="header_search_area">
-          {/* <input type="text" name="" id="" /> */}
+        <div className="header_search_area flex items-center gap-[1rem]">
           <p>Voting open</p>
-          <Dots />
+          <Sentry color="#49b33e" size={24} speed={.5} animating={true} />
         </div>
       </header>
       {showBackDrop && <CustomBackDrop />}
       {userName && <p>Remaining Vote Count for <b>{userName}</b>:- {remainingSlots}</p>}
-      {askMembershipId && <div>
-          <input type="text" name="" id="" onChange={e=>setmidInput(e.target.value)} />
-          <button onClick={()=>saveMembershipId()}>SAVE</button>
-        </div>}
+      {askMembershipId && <dialog className='flex items-center py-2 w-full h-full justify-center z-[100] backdrop:backdrop-blur-sm rounded-md'>
+        <div className='flex flex-col gap-[1rem] border border-solid border-[#000] px-4 py-5'>
+          <p>Enter your <em>Membership ID </em>to participate in this photography contest</p>
+          <input 
+          type="text" 
+          name="" 
+          id="" 
+          onChange={e=>setmidInput(e.target.value)} 
+          placeholder='Enter Membership ID'  
+          className='border border-solid border-[#000] px-1 py-2' 
+          />
+          <button onClick={()=>saveMembershipId()} className='border border-solid bg-primary text-[#fff] py-1'>SAVE</button>
+        </div>
+        </dialog>}
+
       <div className='poll_container'>
-        {loading ? <CustomBackDrop color="white" /> :
-          <div className='all_polls'>
+        {loading ?  <div> <CustomBackDrop  color = {"white"} /> </div>:
+          !askMembershipId && <div className='all_polls'>
             {
               polls.map((vlaue, k) => {
                 return <div key={k} className='poll_card'>
