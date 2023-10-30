@@ -11,7 +11,12 @@ function App() {
   const [polls, setPolls] = useState([]);
   const [loading, setLoading] = useState(true);
   const [membershipId, setmembershipId] = useState(localStorage.getItem('mid') || "");
-  const [askMembershipId, setAskMembershipId] = useState(true);
+  const [askMembershipId, setAskMembershipId] = useState(() => 
+  {
+     localStorage.getItem("mid") && false || true
+    
+  }
+  );
   const [midInput, setmidInput] = useState("");
   const [remainingSlots, setRS] = useState(localStorage.getItem('rs') || "100");
   const [userName, setUserName] = useState(localStorage.getItem('name') || "");
@@ -91,7 +96,7 @@ function App() {
       {userName && <p>Remaining Vote Count for <b>{userName}</b>:- {remainingSlots}</p>}
       {askMembershipId && <dialog className='flex items-center py-2 w-full h-full justify-center z-[100] backdrop:backdrop-blur-sm rounded-md'>
         <div className='flex flex-col gap-[1rem] border border-solid border-[#000] px-4 py-5'>
-          <p>Enter your <em>Membership ID </em>to participate in this photography contest</p>
+          <p>Enter your Membership ID to participate in this photography contest voting</p>
           <input 
           type="text" 
           name="" 
