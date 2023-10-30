@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import axios from 'axios';
-import { Dots, Levels } from "react-activity";
+import { Dots, Levels, Spinner } from "react-activity";
 import "react-activity/dist/library.css";
 import {members} from "./members";
 import 'remixicon/fonts/remixicon.css'
@@ -15,9 +15,13 @@ function App() {
   const [membershipId, setmembershipId] = useState(localStorage.getItem('mid') || "");
   const [askMembershipId, setAskMembershipId] = useState(false);
   const [midInput, setmidInput] = useState("");
+  const [remainingSlots, setRS] = useState(localStorage.getItem('rs') || "100");
+  const [userName, setUserName] = useState("");
+  const [showBackDrop, setSBD] = useState(false)
 
-  const url = "https://backend-poll.onrender.com/api";
-  // const url = "http://localhost:3000/api";
+  // const url = "https://backend-poll.onrender.com/api";
+  const url = "http://localhost:3000/api";
+  
 
   useEffect(() => {
     if (!membershipId) {
@@ -31,6 +35,7 @@ function App() {
   }, [membershipId])
 
   const saveMembershipId = () => {
+    setSBD(true);
     const _refine = midInput.replace(" ","").toUpperCase();
     const _  = members.filter(value=>{
       if(value["Membership ID"]){
@@ -39,9 +44,16 @@ function App() {
       }
     });
     if(_.length>0){
+      axios.get(url+"/user/"+_refine).then(res=>{
+        setRS(res.data.votes);
+        localStorage.setItem('rs',res.data.votes);
+        setUserName(_[0]["Name"]);
+        localStorage.setItem('name',_[0]["Name"]);
+      })
       setmembershipId(_refine);
       localStorage.setItem('mid', _refine);
       setAskMembershipId(false);
+      setSBD(false)
     }
     if(_.length==0){
       alert("Membership ID incorrect");
@@ -64,6 +76,7 @@ function App() {
   }
 
   return (
+
     <>
       <header>
         <div className='heading_container'>
@@ -75,12 +88,14 @@ function App() {
           <Dots />
         </div>
       </header>
+      {showBackDrop && <CustomBackDrop />}
+      {userName && <p>Remaining Vote Count for <b>{userName}</b>:- {remainingSlots}</p>}
       {askMembershipId && <div>
           <input type="text" name="" id="" onChange={e=>setmidInput(e.target.value)} />
           <button onClick={()=>saveMembershipId()}>SAVE</button>
         </div>}
       <div className='poll_container'>
-        {loading ? <p>loading</p> :
+        {loading ? <CustomBackDrop color="white" /> :
           <div className='all_polls'>
             {
               polls.map((vlaue, k) => {
@@ -105,6 +120,13 @@ function App() {
       </div>
     </>
   )
+}
+
+const CustomBackDrop = (color?:any) => {
+  console.log(color.color)
+  return <div className='custom_backdrop' style={color && {backgroundColor:color.color}}>
+  <Spinner />
+</div>
 }
 
 export default App
