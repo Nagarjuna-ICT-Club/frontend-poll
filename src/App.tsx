@@ -100,7 +100,7 @@ function App() {
         </div>
       </header>
       {showBackDrop && <CustomBackDrop />}
-      {userName && <p>Remaining Vote Count for <b>{userName}</b>:- {remainingSlots}</p>}
+      {userName && <p>Remaining Vote Count for <b>{userName}</b>:- {100 - parseInt(remainingSlots)}</p>}
       {askMembershipId && <div>
           <input type="text" name="" id="" onChange={e=>setmidInput(e.target.value)} />
           <button onClick={()=>saveMembershipId()}>SAVE</button>
