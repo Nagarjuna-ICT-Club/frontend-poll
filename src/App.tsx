@@ -68,9 +68,20 @@ function App() {
       id: photoId,
       voter: membershipId
     }
-
     axios.post(url+"/vote",data).then(res=>setPolls(res.data.data))
+  }
 
+  const getName = (id)=>{
+    const _  = members.filter(value=>{
+      if(value["Membership ID"]){
+        // console.log(_refine, String(value["Membership ID"]).split(" ").join("").trim());
+        if(String(value["Membership ID"]).split(" ").join("").trim() == id) return value;
+      }
+    });
+
+    if(_.length>0){
+      return _[0]["Name"]
+    }
   }
 
   console.log(askMembershipId)
@@ -103,7 +114,6 @@ function App() {
           <button onClick={()=>saveMembershipId()} className='border border-solid bg-primary text-[#fff] py-1'>SAVE</button>
         </div>
         </dialog>}
-
       <div className='poll_container'>
         {loading ?  <div> <CustomBackDrop  color = {"white"} /> </div>:
           !askMembershipId && <div className='all_polls'>
@@ -111,7 +121,7 @@ function App() {
               polls.map((vlaue, k) => {
                 return <div key={k} className='poll_card'>
                   <img src={vlaue?.url} />
-                  <h2>Author: {vlaue.author}</h2>
+                  <h2>Author:{getName(vlaue.author)} {vlaue.author}</h2>
                   <h2>Vote Counts: {vlaue.voters.length}</h2>
                   <h2>Uploaded on: {new Date(vlaue.createdAt).toUTCString()}</h2>
                   <div className='card_footer'>
