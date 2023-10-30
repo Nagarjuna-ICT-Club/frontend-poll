@@ -16,11 +16,11 @@ function App() {
   const [askMembershipId, setAskMembershipId] = useState(false);
   const [midInput, setmidInput] = useState("");
   const [remainingSlots, setRS] = useState(localStorage.getItem('rs') || "100");
-  const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState(localStorage.getItem('name') || "");
   const [showBackDrop, setSBD] = useState(false)
 
-  // const url = "https://backend-poll.onrender.com/api";
-  const url = "http://localhost:3000/api";
+  const url = "https://backend-poll.onrender.com/api";
+  // const url = "http://localhost:3000/api";
   
 
   useEffect(() => {
