@@ -16,8 +16,8 @@ function App() {
   const [askMembershipId, setAskMembershipId] = useState(false);
   const [midInput, setmidInput] = useState("");
 
-  // const url = "https://backend-poll.onrender.com/api/all-polls";
-  const url = "http://localhost:3000/api";
+  const url = "https://backend-poll.onrender.com/api";
+  // const url = "http://localhost:3000/api";
 
   useEffect(() => {
     if (!membershipId) {
