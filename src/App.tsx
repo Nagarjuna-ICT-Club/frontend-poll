@@ -5,6 +5,8 @@ import { Levels, Sentry, Spinner } from "react-activity";
 import "react-activity/dist/library.css";
 import { members } from "./members";
 import 'remixicon/fonts/remixicon.css'
+import { toast } from 'react-toastify';
+
 
 
 function App() {
@@ -24,8 +26,8 @@ function App() {
   let photoActive = {};
 
 
-  const url = "https://backend-poll.onrender.com/api";
-  // const url = "http://localhost:3000/api";
+  // const url = "https://backend-poll.onrender.com/api";
+  const url = "http://localhost:3000/api";
 
 
   useEffect(() => {
@@ -140,30 +142,47 @@ function App() {
           <button onClick={() => saveMembershipId()} className='border border-solid bg-primary text-[#fff] py-1'>SAVE</button>
         </div>
       </dialog>}
-      <div className='poll_container py-3'>
+      { photoActive && <div className='poll_card flex single_poll py-3 px-1'>
+                      <img className='flex-1 w-50' src={photoActive?.url} />
+                      <div className='flex flex-col gap-1 details'>
+                        <span className='photo_id'>{photoActive.id}</span>
+                        <div className='author_section'>
+                        <i className="ri-user-6-fill"></i>
+                        <h2 className='author_name'>{getName(photoActive.author)} <span>{photoActive.author}</span></h2>
+                        </div>
+                        <div className='vote_section'>
+                        <i className="ri-heart-2-fill"></i>
+                        <h2 className='vote_count'>{photoActive.voters.length}<span>Likes</span></h2>
+                        </div>
+                        <h2 className='date_h2'>Uploaded on: {new Date(photoActive.createdAt).toUTCString()}</h2>
+                        <div className='card_footer'>
+                          <button className="vote_button" onClick={() => makeVote(photoActive.id)}>Vote <i className="ri-heart-add-fill"></i> </button>
+                          <button disabled className='votes_count'>
+                            <i className="ri-heart-2-fill"></i>
+                            {photoActive.voters.length}
+                            <Levels />
+                          </button>
+                          <button className='view_btn' onClick={() => location.href += "/?photo=" + photoActive.id}>
+                            View <i className="ri-link-unlink-m"></i>
+                          </button>
+                          <button className='copy_link' onClick={()=>{
+                              navigator.clipboard.writeText("https://contest.nagarjunaictclub.com?photo="+photoActive.id)
+                              toast.success("Link Copied to Clipboard",{
+                                position:"bottom-center",
+                                type:"success"
+                              })
+                              }
+                            }>Copy Link <i className="ri-clipboard-line"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                      }
+
+      <div className='poll_container py-3 scrollbar'>
         {loading ? <div> <CustomBackDrop color={"white"} /> </div> :
           !askMembershipId &&
-            photoActive ? <div className='single_active'>
-            <img src={photoActive?.url} />
-            <div className='flex flex-col gap-1'>
-              <h2>Author: {getName(photoActive.author)} ({photoActive.author})</h2>
-              <h2>Vote Counts: {photoActive.voters.length}</h2>
-              <h2>Uploaded on: {new Date(photoActive.createdAt).toUTCString()}</h2>
-              <div className='card_footer'>
-                <button className="vote_button" onClick={() => makeVote(photoActive.id)}>Vote <i className="ri-heart-add-fill"></i> </button>
-                <button disabled className='votes_count'>
-                  <i className="ri-heart-2-fill"></i>
-                  {photoActive.voters.length}
-                  <Levels />
-                </button>
-                <button className='view_btn' onClick={() => location.href = "/"}>
-                  View All
-                </button>
-              </div>
-            </div>
-          </div>
-            :
-            <>
+          <>
+          
               <div className='top_charts'>
                 <h2>Top Chart</h2>
                 {getTopChart().map((top,key)=>{
@@ -187,9 +206,15 @@ function App() {
                       <img src={vlaue?.url} />
                       <div className='flex flex-col gap-1'>
                         <span className='photo_id'>{vlaue.id}</span>
-                        <h2>Author: {getName(vlaue.author)} ({vlaue.author})</h2>
-                        <h2>Vote Counts: {vlaue.voters.length}</h2>
-                        <h2>Uploaded on: {new Date(vlaue.createdAt).toUTCString()}</h2>
+                        <div className='author_section'>
+                        <i className="ri-user-6-fill"></i>
+                        <h2 className='author_name'>{getName(vlaue.author)} <span>{vlaue.author}</span></h2>
+                        </div>
+                        <div className='vote_section'>
+                        <i className="ri-heart-2-fill"></i>
+                        <h2 className='vote_count'>{vlaue.voters.length}<span>Likes</span></h2>
+                        </div>
+                        <h2 className='date_h2'>Uploaded on: {new Date(vlaue.createdAt).toUTCString()}</h2>
                         <div className='card_footer'>
                           <button className="vote_button" onClick={() => makeVote(vlaue.id)}>Vote <i className="ri-heart-add-fill"></i> </button>
                           <button disabled className='votes_count'>
@@ -198,7 +223,7 @@ function App() {
                             <Levels />
                           </button>
                           <button className='view_btn' onClick={() => location.href += "/?photo=" + vlaue.id}>
-                            View
+                            View <i className="ri-link-unlink-m"></i>
                           </button>
                         </div>
                       </div>
@@ -209,6 +234,7 @@ function App() {
 
               </div>
             </>
+
         }
       </div>
     </>
