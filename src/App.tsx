@@ -18,15 +18,25 @@ function App() {
   const [remainingSlots, setRS] = useState(localStorage.getItem('rs') || "100");
   const [userName, setUserName] = useState(localStorage.getItem('name') || "");
   const [showBackDrop, setSBD] = useState(false)
+  const [viewTopCharts,SetViewTopCharts] = useState(() => {
+   return localStorage.getItem("viewTopCharts") ? true : false
+  }
+  )
+
+  console.log(viewTopCharts)
 
   let params = new URLSearchParams(window.location.search).get("photo");
 
   let photoActive = {};
 
 
-  const url = "https://backend-poll.onrender.com/api";
-  // const url = "http://localhost:3000/api";
+  // const url = "https://backend-poll.onrender.com/api";
+  const url = "http://localhost:3000/api";
 
+
+  useEffect(() => {
+    localStorage.setItem("viewTopCharts",JSON.stringify(viewTopCharts))
+  },[viewTopCharts])
 
   useEffect(() => {
     if (!membershipId) {
@@ -140,7 +150,14 @@ function App() {
           <button onClick={() => saveMembershipId()} className='border border-solid bg-primary text-[#fff] py-1'>SAVE</button>
         </div>
       </dialog>}
-      <div className='poll_container py-3'>
+      { !viewTopCharts && (
+      <div className=' px-4 pt-3 '>
+        <button className='border border-solid bg-primary text-[#fff] w-full py-1' onClick={() => SetViewTopCharts(true)} >View Top Charts</button>
+      </div>
+      )
+
+      }
+      <div className='poll_container py-3 '>
         {loading ? <div> <CustomBackDrop color={"white"} /> </div> :
           !askMembershipId &&
             photoActive ? <div className='single_active'>
@@ -163,23 +180,27 @@ function App() {
             </div>
           </div>
             :
-            <>
-              <div className='top_charts'>
-                <h2>Top Chart</h2>
+             <>
+             {
+              viewTopCharts && (
+              <div className='top_charts px-4 py-2 pb-4 flex flex-col gap-2'>
+                <h2 className=' text-xl'>Top Chart <i className="ri-award-fill"></i> </h2>
                 {getTopChart().map((top,key)=>{
             
-                  if(top.voters.length>0){
-                    return <div key={key} className='flex gap-1'>
-                      <img src={top.url} width={'100'} />
+                  if(top?.voters?.length>0){
+                    return <div key={key} className='flex gap-2'>
+                      <img src={top.url} width={'100'} loading="lazy" />
                       <div>
-                      <span className='text-muted'>{top.id}</span>
+                      <span className='text-muted photo_id text-sm'>{top.id}</span>
                       <p>{top.author}</p>
-                      <p>{getName(top.author)}</p>
+                      <p className=' font-bold'>{getName(top.author)}</p>
                       </div>
                     </div>
                   }
                 })}
               </div>
+              )
+             }
               <div className='all_polls'>
                 {
                   polls.map((vlaue, k) => {
@@ -216,7 +237,6 @@ function App() {
 }
 
 const CustomBackDrop = (color?: any) => {
-  console.log(color.color)
   return <div className='custom_backdrop' style={color && { backgroundColor: color.color }}>
     <Spinner />
   </div>

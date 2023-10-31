@@ -23,9 +23,9 @@ header {
   flex-direction: column;
   max-height: 90vh;
 }
-.top_charts{
+/* .top_charts{
   display: none;
-}
+} */
 
 .all_polls {
   display: flex;
