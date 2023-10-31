@@ -141,7 +141,6 @@ function App() {
       {showBackDrop && <CustomBackDrop />}
      
       {userName && <p className=' px-4 py-1 remaining_notice'>Remaining Vote Count for <b>{userName}</b> :- <span>{100-remainingSlots}</span></p>}
-      { <button className={`${topChartOn ? 'chart_on': ''} mobile_btn`} onClick={()=>setTCO(!topChartOn)}>{topChartOn ?<span><i className="ri-polaroid-2-line"></i> show all polls</span> :<span><i className="ri-line-chart-line"></i> show top chart</span>}</button>}
       {askMembershipId && <dialog className='flex items-center py-2 w-full h-full justify-center z-[100] backdrop:backdrop-blur-sm rounded-md'>
         <div className='flex flex-col gap-[1rem] border border-solid border-[#000] px-4 py-5'>
           <p>Enter your <em>Membership ID</em> to participate in this photography contest voting</p>
@@ -156,23 +155,7 @@ function App() {
           <button onClick={() => saveMembershipId()} className='border border-solid bg-primary text-[#fff] py-1'>SAVE</button>
         </div>
       </dialog>}
-      {!loading && <div className={topChartOn ? 'top_charts active':'top_charts'}>
-                <h2>Top Chart</h2>
-                {getTopChart().map((top,key)=>{
-            
-                  if(top.voters.length>0){
-                    return <div key={key} className='chart_card flex gap-1' onClick={() => location.href += "/?photo=" + top.id}>
-                      <img src={top.url} width={'100'} />
-                      <p className='badge'>{top.voters.length} votes</p>
-                      <div>
-                      <span className='photo_id'>{top.id}</span>
-                      <p className='author_name'>{top.author}<span>{getName(top.author)}</span></p>
-                     
-                      </div>
-                    </div>
-                  }
-                })}
-              </div>}
+      
       { photoActive && <div className='poll_card flex single_poll py-3 px-1'>
                       <img className='flex-1 w-50' src={photoActive?.url} />
                       <div className='flex flex-col gap-1 details'>
@@ -208,12 +191,28 @@ function App() {
                       </div>
                     </div>
                       }
-
+      { <button className={`${topChartOn ? 'chart_on': ''} mobile_btn`} onClick={()=>setTCO(!topChartOn)}>{topChartOn ?<span><i className="ri-polaroid-2-line"></i> show all polls</span> :<span><i className="ri-line-chart-line"></i> show top chart</span>}</button>}
       <div className='poll_container py-3 '>
         {loading ? <div> <CustomBackDrop color={"white"} /> </div> :
           !askMembershipId &&
           <>
+            {!loading && <div className={topChartOn ? 'top_charts active':'top_charts'}>
+                <h2>Top Chart</h2>
+                {getTopChart().map((top,key)=>{
             
+                  if(top.voters.length>0){
+                    return <div key={key} className='chart_card flex gap-1' onClick={() => location.href += "/?photo=" + top.id}>
+                      <img src={top.url} width={'100'} />
+                      <p className='badge'>{top.voters.length} votes</p>
+                      <div>
+                      <span className='photo_id'>{top.id}</span>
+                      <p className='author_name'>{top.author}<span>{getName(top.author)}</span></p>
+                     
+                      </div>
+                    </div>
+                  }
+                })}
+              </div>}
               
               <div className='all_polls scrollbar'>
                 {
