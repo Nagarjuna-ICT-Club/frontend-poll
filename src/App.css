@@ -222,6 +222,11 @@ dialog div {
   margin: 10px 42px;
   padding: 5px 31px;
 }
+dialog{
+  position: absolute;
+    height: 100vh;
+    top: 0%;
+}
 .chart_on{
   background-color: black;
   color: white;
