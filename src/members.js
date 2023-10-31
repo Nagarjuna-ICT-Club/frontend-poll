@@ -1794,6 +1794,14 @@ export const members = [
     "Phone Number": 9845241117,
   },
   {
+    "S.N.": 131,
+    Name: "Hari Prasad Gyawali",
+    "Membership ID": "CSITHPG370",
+    Faculty: "CSIT",
+    Semester: "6th",
+    "Phone Number": 9845241117,
+  },
+  {
     "S.N.": 14,
     Name: "Prateek Bikram Jairu",
     "Membership ID": "CSIT PBJ 127",
