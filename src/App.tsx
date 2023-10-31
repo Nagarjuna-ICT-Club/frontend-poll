@@ -27,8 +27,8 @@ function App() {
   let photoActive = {};
 
 
-  // const url = "https://backend-poll.onrender.com/api";
-  const url = "http://localhost:3000/api";
+  const url = "https://backend-poll.onrender.com/api";
+  // const url = "http://localhost:3000/api";
 
 
   useEffect(() => {
