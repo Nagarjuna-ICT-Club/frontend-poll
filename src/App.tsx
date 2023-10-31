@@ -17,9 +17,10 @@ function App() {
     return localStorage.getItem("mid") ? false : true
   });
   const [midInput, setmidInput] = useState("");
-  const [remainingSlots, setRS] = useState(localStorage.getItem('rs') || "100");
+  const [remainingSlots, setRS] = useState(parseInt(localStorage.getItem('rs') || "100"));
   const [userName, setUserName] = useState(localStorage.getItem('name') || "");
   const [showBackDrop, setSBD] = useState(false)
+  const [topChartOn, setTCO] = useState(false);
 
   let params = new URLSearchParams(window.location.search).get("photo");
 
@@ -77,7 +78,11 @@ function App() {
       id: photoId,
       voter: membershipId
     }
-    axios.post(url + "/vote", data).then(res => setPolls(res.data.data))
+    axios.post(url + "/vote", data).then(res => {
+      setPolls(res.data.data)
+      setRS(parseInt(remainingSlots+1));
+      localStorage.setItem("rs",remainingSlots+1);
+    })
   }
 
   const getName = (id) => {
@@ -127,7 +132,9 @@ function App() {
         </div>
       </header>
       {showBackDrop && <CustomBackDrop />}
-      {userName && <p className=' px-4 py-1 remaining_notice'>Remaining Vote Count for <b>{userName}</b> :- <span>{remainingSlots}</span></p>}
+     
+      {userName && <p className=' px-4 py-1 remaining_notice'>Remaining Vote Count for <b>{userName}</b> :- <span>{100-remainingSlots}</span></p>}
+      { <button className='mobile_btn' onClick={()=>setTCO(!topChartOn)}>show top chart</button>}
       {askMembershipId && <dialog className='flex items-center py-2 w-full h-full justify-center z-[100] backdrop:backdrop-blur-sm rounded-md'>
         <div className='flex flex-col gap-[1rem] border border-solid border-[#000] px-4 py-5'>
           <p>Enter your <em>Membership ID</em> to participate in this photography contest voting</p>
@@ -162,8 +169,8 @@ function App() {
                             {photoActive.voters.length}
                             <Levels />
                           </button>
-                          <button className='view_btn' onClick={() => location.href += "/?photo=" + photoActive.id}>
-                            View <i className="ri-link-unlink-m"></i>
+                          <button className='view_btn' onClick={() => location.href = "/"}>
+                            Back<i className="ri-link-unlink-m"></i>
                           </button>
                           <button className='copy_link' onClick={()=>{
                               navigator.clipboard.writeText("https://contest.nagarjunaictclub.com?photo="+photoActive.id)
@@ -178,28 +185,29 @@ function App() {
                     </div>
                       }
 
-      <div className='poll_container py-3 scrollbar'>
+      <div className='poll_container py-3 '>
         {loading ? <div> <CustomBackDrop color={"white"} /> </div> :
           !askMembershipId &&
           <>
-          
-              <div className='top_charts'>
+            
+              <div className={topChartOn ? 'top_charts active':'top_charts'}>
                 <h2>Top Chart</h2>
                 {getTopChart().map((top,key)=>{
             
                   if(top.voters.length>0){
-                    return <div key={key} className='flex gap-1'>
+                    return <div key={key} className='chart_card flex gap-1' onClick={() => location.href += "/?photo=" + top.id}>
                       <img src={top.url} width={'100'} />
+                      <p className='badge'>{top.voters.length} votes</p>
                       <div>
-                      <span className='text-muted'>{top.id}</span>
-                      <p>{top.author}</p>
-                      <p>{getName(top.author)}</p>
+                      <span className='photo_id'>{top.id}</span>
+                      <p className='author_name'>{top.author}<span>{getName(top.author)}</span></p>
+                     
                       </div>
                     </div>
                   }
                 })}
               </div>
-              <div className='all_polls'>
+              <div className='all_polls scrollbar'>
                 {
                   polls.map((vlaue, k) => {
                     return <div key={k} className='poll_card flex flex-col gap-1'>
@@ -230,8 +238,6 @@ function App() {
                     </div>
                   })
                 }
-
-
               </div>
             </>
 

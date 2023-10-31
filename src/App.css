@@ -5,6 +5,9 @@ header {
   color: whitesmoke;
   padding: 10px 20px;
 }
+.active{
+  display: block !important;
+}
 .single_poll{
   flex-direction: column;
 }
@@ -35,6 +38,33 @@ header {
 .author_name span{
   font-size: 12px;
   letter-spacing: 2px;
+}
+.top_charts h2{
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+.scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.badge{
+  position: absolute;
+  background: #e92b3d;
+  color: white;
+  padding: 0 5px;
+  font-size: 12px;
+  font-weight: 900;
+  border-radius: 18px;
+}
+.chart_card{
+  margin: 5px 0;
+  position: relative;
+  border-bottom: 1px solid #9f9f9f;
+  padding: 5px;
+  cursor: pointer;
+}
+.chart_card:hover{
+  background-color: #7fff787b;
 }
 .vote_count{
   font-size: 2em;
@@ -69,6 +99,9 @@ header {
 }
 .top_charts{
   display: none;
+  padding: 10px 24px;
+  background: #8a889345;
+  overflow-y: scroll;
 }
 
 .all_polls {
@@ -181,6 +214,9 @@ dialog div {
 
 /* media query */
 @media screen and (min-width: 769px) {
+  .mobile_btn{
+    display: none;
+  }
 
   .single_poll{
     justify-content: center;
@@ -238,6 +274,9 @@ dialog div {
 @media screen and (min-width: 1025px) {
   .all_polls {
     grid-template-columns: 1fr 1fr 1fr;
+  }
+  .mobile_btn{
+    display: none;
   }
 }
 
