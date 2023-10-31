@@ -5,6 +5,48 @@ header {
   color: whitesmoke;
   padding: 10px 20px;
 }
+.single_poll{
+  flex-direction: column;
+}
+.vote_section{
+  display: flex;
+  align-items: baseline;
+  gap: 5px;  
+}
+.vote_section i{
+  font-size: 2em;
+  color: #DB4437;
+}
+.author_section{
+  display: flex;
+  align-items: baseline;
+}
+.author_section i{
+  font-size: 2em;
+}
+.author_name{
+  display: grid;
+  font-size: 2em;
+  padding: 0;
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.2;
+}
+.author_name span{
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+.vote_count{
+  font-size: 2em;
+  color: rgb(36 62 106);
+  letter-spacing: 2px;
+  font-weight: 900;
+}
+.vote_count span{
+  font-size: 14px;
+  font-weight: 200;
+  margin: 0 10px;
+}
 .view_btn{
   font-size: 14px;
   padding: 5px 30px;
@@ -16,7 +58,9 @@ header {
 }
 .photo_id{
   font-size: 10px;
-    color: #39383b;
+  color: #39383b;
+  font-weight: 800;
+  letter-spacing: 1px;
 }
 .poll_container{
   display: flex;
@@ -42,15 +86,27 @@ header {
   height: auto;
   object-fit: cover;
 }
+.details{
+  background: antiquewhite;
+  padding: 5px;
+}
+
 
 .vote_button {
   font-size: 14px;
   padding: 5px 30px;
   outline: none;
-  background-color: chartreuse;
+  background-color: #DB4437;
+  color: white;
   border: 1px sold black;
   border-radius: 5px;
   cursor: pointer;
+}
+.date_h2{
+  text-align: center;
+  font-size: 12px;
+  font-weight: 100;
+  letter-spacing: 1px;
 }
 .vote_button:hover {
   background-color: black;
@@ -125,6 +181,17 @@ dialog div {
 
 /* media query */
 @media screen and (min-width: 769px) {
+
+  .single_poll{
+    justify-content: center;
+    gap: 20px;
+    flex-direction: row;
+  }
+  .single_poll img{
+    max-width: 45vw !important;
+    flex: 1;
+  }
+
   .all_polls {
     display: grid;
     place-content: flex-start;
@@ -151,6 +218,19 @@ dialog div {
     grid-template-columns: 1fr 1fr;
     gap: 20px;
   }
+.details {
+  height: fit-content;
+  padding: 60px 16px;
+  border-radius: 10px;
+  padding: 2em 2em;;
+}
+
+.copy_link{
+  border: 1px solid black;
+  padding: 5px 10px;
+  font-size: 14px;
+  border-radius: 5px;
+}
 
 
 }
@@ -160,3 +240,4 @@ dialog div {
     grid-template-columns: 1fr 1fr 1fr;
   }
 }
+
