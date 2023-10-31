@@ -30,7 +30,14 @@ function App() {
   const url = "https://backend-poll.onrender.com/api";
   // const url = "http://localhost:3000/api";
 
-
+  useEffect(()=>{
+    axios.get(url + "/user/" + membershipId).then(res => {
+      setRS(res.data.votes);
+      localStorage.setItem('rs', res.data.votes);
+      setAskMembershipId(false);
+      setSBD(false)
+    })
+  },[membershipId])
   useEffect(() => {
     if (!membershipId) {
       setAskMembershipId(true);
@@ -149,6 +156,23 @@ function App() {
           <button onClick={() => saveMembershipId()} className='border border-solid bg-primary text-[#fff] py-1'>SAVE</button>
         </div>
       </dialog>}
+      {!loading && <div className={topChartOn ? 'top_charts active':'top_charts'}>
+                <h2>Top Chart</h2>
+                {getTopChart().map((top,key)=>{
+            
+                  if(top.voters.length>0){
+                    return <div key={key} className='chart_card flex gap-1' onClick={() => location.href += "/?photo=" + top.id}>
+                      <img src={top.url} width={'100'} />
+                      <p className='badge'>{top.voters.length} votes</p>
+                      <div>
+                      <span className='photo_id'>{top.id}</span>
+                      <p className='author_name'>{top.author}<span>{getName(top.author)}</span></p>
+                     
+                      </div>
+                    </div>
+                  }
+                })}
+              </div>}
       { photoActive && <div className='poll_card flex single_poll py-3 px-1'>
                       <img className='flex-1 w-50' src={photoActive?.url} />
                       <div className='flex flex-col gap-1 details'>
@@ -190,23 +214,7 @@ function App() {
           !askMembershipId &&
           <>
             
-              <div className={topChartOn ? 'top_charts active':'top_charts'}>
-                <h2>Top Chart</h2>
-                {getTopChart().map((top,key)=>{
-            
-                  if(top.voters.length>0){
-                    return <div key={key} className='chart_card flex gap-1' onClick={() => location.href += "/?photo=" + top.id}>
-                      <img src={top.url} width={'100'} />
-                      <p className='badge'>{top.voters.length} votes</p>
-                      <div>
-                      <span className='photo_id'>{top.id}</span>
-                      <p className='author_name'>{top.author}<span>{getName(top.author)}</span></p>
-                     
-                      </div>
-                    </div>
-                  }
-                })}
-              </div>
+              
               <div className='all_polls scrollbar'>
                 {
                   polls.map((vlaue, k) => {
