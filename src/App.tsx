@@ -146,7 +146,7 @@ function App() {
             photoActive ? <div className='single_active'>
             <img src={photoActive?.url} />
             <div className='flex flex-col gap-1'>
-              <h2>Author:{getName(photoActive.author)} {photoActive.author}</h2>
+              <h2>Author: {getName(photoActive.author)} ({photoActive.author})</h2>
               <h2>Vote Counts: {photoActive.voters.length}</h2>
               <h2>Uploaded on: {new Date(photoActive.createdAt).toUTCString()}</h2>
               <div className='card_footer'>
