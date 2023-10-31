@@ -30,7 +30,14 @@ function App() {
   const url = "https://backend-poll.onrender.com/api";
   // const url = "http://localhost:3000/api";
 
-
+  useEffect(()=>{
+    axios.get(url + "/user/" + membershipId).then(res => {
+      setRS(res.data.votes);
+      localStorage.setItem('rs', res.data.votes);
+      setAskMembershipId(false);
+      setSBD(false)
+    })
+  },[membershipId])
   useEffect(() => {
     if (!membershipId) {
       setAskMembershipId(true);
