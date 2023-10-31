@@ -57,11 +57,11 @@ function App() {
         localStorage.setItem('rs', res.data.votes);
         setUserName(_[0]["Name"]);
         localStorage.setItem('name', _[0]["Name"]);
+        setmembershipId(_refine);
+        localStorage.setItem('mid', _refine);
+        setAskMembershipId(false);
+        setSBD(false)
       })
-      setmembershipId(_refine);
-      localStorage.setItem('mid', _refine);
-      setAskMembershipId(false);
-      setSBD(false)
     }
     if (_.length == 0) {
       alert("Membership ID incorrect");
