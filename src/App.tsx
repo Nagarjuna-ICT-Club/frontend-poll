@@ -27,8 +27,8 @@ function App() {
   let photoActive = {};
 
 
-  const url = "https://backend-poll.onrender.com/api";
-  // const url = "http://localhost:3000/api";
+  // const url = "https://backend-poll.onrender.com/api";
+  const url = "http://localhost:3000/api";
 
 
   useEffect(() => {
@@ -134,7 +134,7 @@ function App() {
       {showBackDrop && <CustomBackDrop />}
      
       {userName && <p className=' px-4 py-1 remaining_notice'>Remaining Vote Count for <b>{userName}</b> :- <span>{100-remainingSlots}</span></p>}
-      { <button className='mobile_btn' onClick={()=>setTCO(!topChartOn)}>show top chart</button>}
+      { <button className={`${topChartOn ? 'chart_on': ''} mobile_btn`} onClick={()=>setTCO(!topChartOn)}>{topChartOn ?<span><i className="ri-polaroid-2-line"></i> show all polls</span> :<span><i className="ri-line-chart-line"></i> show top chart</span>}</button>}
       {askMembershipId && <dialog className='flex items-center py-2 w-full h-full justify-center z-[100] backdrop:backdrop-blur-sm rounded-md'>
         <div className='flex flex-col gap-[1rem] border border-solid border-[#000] px-4 py-5'>
           <p>Enter your <em>Membership ID</em> to participate in this photography contest voting</p>

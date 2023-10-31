@@ -97,16 +97,13 @@ header {
   flex-direction: column;
   max-height: 90vh;
 }
-/* .top_charts{
+.top_charts{
   display: none;
-<<<<<<< HEAD
   padding: 10px 24px;
   background: #8a889345;
   overflow-y: scroll;
+  min-height: 100vh;
 }
-=======
-} */
->>>>>>> 3c1e5132f9358260d5dc1862e83bbf79f32e6533
 
 .all_polls {
   display: flex;
@@ -216,8 +213,23 @@ dialog div {
   }
 }
 
+.mobile_btn{
+  text-align: center;
+  width: 80%;
+  border: 1px solid black;
+  font-size: 18px;
+  text-transform: uppercase;
+  margin: 10px 42px;
+  padding: 5px 31px;
+}
+.chart_on{
+  background-color: black;
+  color: white;
+}
+
 /* media query */
 @media screen and (min-width: 769px) {
+  
   .mobile_btn{
     display: none;
   }
@@ -244,6 +256,7 @@ dialog div {
 }
 .top_charts{
   display: block;
+  min-height: 60vh !important;
 }
 
 
@@ -283,4 +296,3 @@ dialog div {
     display: none;
   }
 }
-
