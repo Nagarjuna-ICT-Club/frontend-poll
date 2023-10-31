@@ -58,6 +58,7 @@ header .heading_container{
   display: flex;
   gap: 16px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .custom_backdrop{
@@ -69,4 +70,14 @@ header .heading_container{
     display: grid;
     place-content: center;
     opacity: 0.4;
+}
+
+.single_active{
+  display: flex;
+  justify-content: center;
+}
+
+.single_active > .card_footer {
+  display: grid;
+  padding: 10px;
 }

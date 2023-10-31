@@ -18,9 +18,15 @@ function App() {
   const [remainingSlots, setRS] = useState(localStorage.getItem('rs') || "100");
   const [userName, setUserName] = useState(localStorage.getItem('name') || "");
   const [showBackDrop, setSBD] = useState(false)
+  
+  let params = new URLSearchParams(window.location.search).get("photo");
 
-  const url = "https://backend-poll.onrender.com/api";
-  // const url = "http://localhost:3000/api";
+  let photoActive = {};
+
+
+
+  // const url = "https://backend-poll.onrender.com/api";
+  const url = "http://localhost:3000/api";
   
 
   useEffect(() => {
@@ -86,8 +92,23 @@ function App() {
     }
   }
 
-  return (
+  const getAPoll = (id) => {
+    const _  = polls.filter(value=>{
+      if(value.id==id) return value;
+    });
+    if(_.length>0){
+      return _[0];
+    }
+      params = "";
+      return;
+  }
 
+  if(params!=""){
+    photoActive = getAPoll(params);
+  }
+
+
+  return (
     <>
       <header>
         <div className='heading_container'>
@@ -106,28 +127,45 @@ function App() {
           <button onClick={()=>saveMembershipId()}>SAVE</button>
         </div>}
       <div className='poll_container'>
-        {loading ? <CustomBackDrop color="white" /> :
-          <div className='all_polls'>
-            {
-              polls.map((vlaue, k) => {
-                return <div key={k} className='poll_card'>
-                  <img src={vlaue?.url} />
-                  <h2>Author:{getName(vlaue.author)} {vlaue.author}</h2>
-                  <h2>Vote Counts: {vlaue.voters.length}</h2>
-                  <h2>Uploaded on: {new Date(vlaue.createdAt).toUTCString()}</h2>
-                  <div className='card_footer'>
-                  <button  className="vote_button"onClick={() => makeVote(vlaue.id)}>Vote <i className="ri-heart-add-fill"></i> </button>
-                  <button disabled className='votes_count'>
-                   <i className="ri-heart-2-fill"></i>
-                    {vlaue.voters.length}
-                    <Levels />
-                   </button>
-                  </div>
+        {photoActive ? <div className='single_active'>
+          <img src={photoActive.url}  width={'700'}/>
+          <div className='card_footer'>
+          <h2>POSTID: {photoActive.id}</h2>
+          <h4>{getName(photoActive.author)}</h4>
+          <h4>{}</h4>
+                <button  className="vote_button"onClick={() => makeVote(photoActive.id)}>Vote <i className="ri-heart-add-fill"></i> </button>
+                <button className='votes_count' onClick={()=>location.href ="?photo="+photoActive.id}>
+                 <i className="ri-heart-2-fill"></i>
+                  {photoActive.voters.length}
+                  <Levels />
+                 </button>
+                <button  className="vote_button"onClick={() => location.href="/"}>See All</button>
                 </div>
-              })
-            }
-          </div>
-        }
+        </div> :
+        loading ? <CustomBackDrop color="white" /> :
+        <div className='all_polls'>
+          {
+            polls.map((vlaue, k) => {
+              return <div key={k} className='poll_card'>
+                <img src={vlaue?.url} />
+                <h2>Author:{getName(vlaue.author)} {vlaue.author}</h2>
+                <h2>Vote Counts: {vlaue.voters.length}</h2>
+                <h2>Uploaded on: {new Date(vlaue.createdAt).toUTCString()}</h2>
+                <div className='card_footer'>
+                <button  className="vote_button"onClick={() => makeVote(vlaue.id)}>Vote <i className="ri-heart-add-fill"></i> </button>
+                <button className='votes_count' onClick={()=>location.href ="?photo="+vlaue.id}>
+                 <i className="ri-heart-2-fill"></i>
+                  {vlaue.voters.length}
+                  <Levels />
+                 </button>
+                </div>
+              </div>
+            })
+          }
+        </div>
+      }
+      
+        
       </div>
     </>
   )
