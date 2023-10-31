@@ -8,15 +8,12 @@ header {
 
 .all_polls {
   display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 20px;
   justify-content: center;
-  margin-top: 10px;
+  padding-inline: 16px;
 }
 
-.poll_card {
-  width: 45vw;
-}
 .poll_card img {
   width: 100%;
   height: auto;
@@ -76,11 +73,31 @@ dialog {
   animation: show 1s ease normal;
 }
 
+dialog div {
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(1px);
+}
+
 @keyframes show {
   from {
     transform: scale(0.2);
   }
   to {
     transform: scale(1);
+  }
+}
+
+/* media query */
+@media screen and (min-width: 769px) {
+  .all_polls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+}
+
+@media screen and (min-width: 1025px) {
+  .all_polls {
+    grid-template-columns: 1fr 1fr 1fr;
   }
 }

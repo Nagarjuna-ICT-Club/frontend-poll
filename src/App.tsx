@@ -87,8 +87,6 @@ function App() {
     }
   }
 
-  console.log(askMembershipId)
-
   return (
 
     <>
@@ -102,7 +100,7 @@ function App() {
         </div>
       </header>
       {showBackDrop && <CustomBackDrop />}
-      {userName && <p>Remaining Vote Count for <b>{userName}</b>:- {remainingSlots}</p>}
+      {userName && <p className=' px-4 py-1'>Remaining Vote Count for <b>{userName}</b> :- {remainingSlots}</p>}
       {askMembershipId && <dialog className='flex items-center py-2 w-full h-full justify-center z-[100] backdrop:backdrop-blur-sm rounded-md'>
         <div className='flex flex-col gap-[1rem] border border-solid border-[#000] px-4 py-5'>
           <p>Enter your <em>Membership ID</em> to participate in this photography contest voting</p>
@@ -117,13 +115,14 @@ function App() {
           <button onClick={()=>saveMembershipId()} className='border border-solid bg-primary text-[#fff] py-1'>SAVE</button>
         </div>
         </dialog>}
-      <div className='poll_container'>
+      <div className='poll_container py-3'>
         {loading ?  <div> <CustomBackDrop  color = {"white"} /> </div>:
           !askMembershipId && <div className='all_polls'>
             {
               polls.map((vlaue, k) => {
-                return <div key={k} className='poll_card'>
+                return <div key={k} className='poll_card flex flex-col gap-1'>
                   <img src={vlaue?.url} />
+                  <div className='flex flex-col gap-1 mt-auto'>
                   <h2>Author:{getName(vlaue.author)} {vlaue.author}</h2>
                   <h2>Vote Counts: {vlaue.voters.length}</h2>
                   <h2>Uploaded on: {new Date(vlaue.createdAt).toUTCString()}</h2>
@@ -134,6 +133,7 @@ function App() {
                     {vlaue.voters.length}
                     <Levels />
                    </button>
+                  </div>
                   </div>
                 </div>
               })
