@@ -1,76 +1,144 @@
-
-header{
+header {
   display: flex;
   flex-wrap: wrap;
   background-color: rgb(36 62 106);
   color: whitesmoke;
   padding: 10px 20px;
 }
-
-header .heading_container{
-  flex: 1;
+.view_btn{
+  font-size: 14px;
+  padding: 5px 30px;
+  color:rgb(36 62 106);
+  border: 1px sold black;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid brown;
 }
-
-.all_polls{
+.photo_id{
+  font-size: 10px;
+    color: #39383b;
+}
+.poll_container{
   display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 10px;
+  flex-direction: column;
+  max-height: 90vh;
+}
+.top_charts{
+  display: none;
 }
 
-.poll_card{
-  width: 45vw;
+.all_polls {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  padding-inline: 16px;
+  flex: 1;
+  overflow-y: auto;
 }
-.poll_card img{
+
+.poll_card img {
   width: 100%;
   height: auto;
   object-fit: cover;
 }
 
-.vote_button{
-  font-size: 20px;
-  padding: 9px 30px;
+.vote_button {
+  font-size: 14px;
+  padding: 5px 30px;
   outline: none;
   background-color: chartreuse;
   border: 1px sold black;
   border-radius: 5px;
   cursor: pointer;
 }
-.vote_button:hover{
+.vote_button:hover {
   background-color: black;
   color: white;
 }
-.votes_count{
+.votes_count {
   display: flex;
-  font-size: 20px;
-  padding: 9px 30px;
+  font-size: 14px;
+  padding: 5px 30px;
   outline: none;
   background-color: rgb(228, 222, 222);
   border: none;
   border-radius: 5px;
-  cursor:auto;
+  cursor: auto;
   gap: 10px;
   justify-content: center;
 }
+.remaining_notice{
+  text-align: center;
+  background-color: aliceblue;
+  margin: auto;
+  width: fit-content;
+  padding: 5px 10px;
+  margin-top: 10px;
+}
+.remaining_notice span{
+  font-size: 23px;
+  font-weight: bold;
+}
 
-.card_footer{
+.card_footer {
   display: flex;
   gap: 16px;
   align-items: center;
   flex-wrap: wrap;
 }
 
-.custom_backdrop{
+.custom_backdrop {
   position: absolute;
-    z-index: 99;
-    background: #7eff78;
-    width: 100%;
-    height: 100vh;
-    display: grid;
-    place-content: center;
-    opacity: 0.4;
+  z-index: 99;
+  background: #7eff78;
+  width: 100%;
+  height: 100vh;
+  display: grid;
+  place-content: center;
+  opacity: 0.4;
 }
+
+input {
+  border: none;
+  outline: none;
+}
+
+dialog {
+  -webkit-animation: show 1s ease normal;
+  animation: show 1s ease normal;
+}
+
+dialog div {
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(1px);
+}
+
+@keyframes show {
+  from {
+    transform: scale(0.2);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* media query */
+@media screen and (min-width: 769px) {
+  .all_polls {
+    display: grid;
+    place-content: flex-start;
+    align-items: baseline;
+}
+.poll_container{
+  display: flex;
+  flex-direction: row-reverse;
+  max-height: 90vh;
+}
+.top_charts{
+  display: block;
+}
+
 
 .single_active{
   display: flex;
@@ -80,4 +148,15 @@ header .heading_container{
 .single_active > .card_footer {
   display: grid;
   padding: 10px;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+
+}
+
+@media screen and (min-width: 1025px) {
+  .all_polls {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }
