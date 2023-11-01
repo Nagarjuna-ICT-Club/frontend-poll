@@ -180,7 +180,7 @@ function App() {
                             Back<i className="ri-link-unlink-m"></i>
                           </button>
                           <button className='copy_link' onClick={()=>{
-                              navigator.clipboard.writeText("https://contest.nagarjunaictclub.com?photo="+photoActive.id)
+                              navigator.clipboard.writeText("https://contest.nagarjunaictclub.com/?photo="+photoActive.id)
                               toast.success("Link Copied to Clipboard",{
                                 position:"bottom-center",
                                 type:"success"
