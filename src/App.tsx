@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './App.css'
 import axios from 'axios';
 import { Levels, Sentry, Spinner } from "react-activity";
@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 
 function App() {
   const [polls, setPolls] = useState([]);
+  const [filteredPolls, setFilteredPolls] = useState([]);
   const [loading, setLoading] = useState(true);
   const [membershipId, setmembershipId] = useState(localStorage.getItem('mid') || "");
   const [askMembershipId, setAskMembershipId] = useState(() => {
@@ -21,14 +22,15 @@ function App() {
   const [userName, setUserName] = useState(localStorage.getItem('name') || "");
   const [showBackDrop, setSBD] = useState(false)
   const [topChartOn, setTCO] = useState(false);
+  const searchBar = useRef(null);
 
   let params = new URLSearchParams(window.location.search).get("photo");
 
   let photoActive = {};
 
 
-  const url = "https://backend-poll.onrender.com/api";
-  // const url = "http://localhost:3000/api";
+//   const url = "https://backend-poll.onrender.com/api";
+  const url = "http://localhost:3000/api";
 
   useEffect(()=>{
     axios.get(url + "/user/" + membershipId).then(res => {
@@ -45,6 +47,7 @@ function App() {
 
     axios.get(url + "/all-polls").then(res => {
       setPolls(res.data.data)
+      setFilteredPolls(res.data.data)
       setLoading(false);
     })
   }, [membershipId])
@@ -87,6 +90,7 @@ function App() {
       voter: membershipId
     }
     axios.post(url + "/vote", data).then(res => {
+      setFilteredPolls(res.data.data);
       setPolls(res.data.data)
       setRS(100-parseInt(res.data.rs));
       localStorage.setItem("rs",(100-parseInt(res.data.rs)));
@@ -127,6 +131,16 @@ function App() {
     return sorted;
   }
 
+  const filterPoll = () => {
+	let searchQuery = searchBar.current.value.replace(" ", "").toUpperCase();
+	setFilteredPolls(() => {
+		let filtered = polls.filter(poll => {
+			let contestant = getName(poll.author).replace(" ", "").toUpperCase();
+			if(contestant.includes(searchQuery)) return true;
+		});
+		return filtered;
+	});
+  }
 
   return (
     <>
@@ -138,6 +152,11 @@ function App() {
           <p>Voting open</p>
           <Sentry color="#49b33e" size={24} speed={.5} animating={true} />
         </div>
+		<div className="header_search_box flex">
+			<input type="text" className="search_box" placeholder='Search Contestant' ref={searchBar} 
+				onChange={e => e.target.value ? null : filterPoll()}/>
+			<i className="ri-search-line search_btn flex items-center justify-center" onClick={filterPoll}></i>
+		</div>
       </header>
       {showBackDrop && <CustomBackDrop />} 
       {userName && <p className=' px-4 py-1 remaining_notice'>Remaining Vote Count for <b>{userName}</b> :- <span>{remainingSlots}</span></p>}
@@ -215,14 +234,16 @@ function App() {
               
               <div className='all_polls scrollbar'>
                 {
-                  polls.map((vlaue, k) => {
+                  filteredPolls.map((vlaue, k) => {
                     return <div key={k} className='poll_card flex flex-col gap-1'>
                       <img src={vlaue?.url} />
                       <div className='flex flex-col gap-1'>
                         <span className='photo_id'>{vlaue.id}</span>
                         <div className='author_section'>
                         <i className="ri-user-6-fill"></i>
-                        <h2 className='author_name'>{getName(vlaue.author)} <span>{vlaue.author}</span></h2>
+                        <h2 className='author_name'>{getName(vlaue.author)}
+							{/* <span>{vlaue.author}</span> */}
+						</h2>
                         </div>
                         <div className='vote_section'>
                         <i className="ri-heart-2-fill"></i>

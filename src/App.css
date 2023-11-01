@@ -5,6 +5,27 @@ header {
   color: whitesmoke;
   padding: 10px 20px;
 }
+.header_search_box {
+	width: 100%;
+}
+.header_search_box input{
+	color: #39383b;
+	height: 40px;
+	width: 100%;
+	border-radius: 5px 0 0 5px;
+	padding: 5px;
+	outline: 0px solid transparent;
+}
+.header_search_box i:hover{
+	cursor: pointer;
+}
+.header_search_box i{
+	width: 50px;
+	height: 40px;
+	color: black;
+	background-color: rgb(228, 222, 222);
+	border-radius: 0 5px 5px 0;
+}
 .active{
   display: block !important;
 }
@@ -258,8 +279,8 @@ dialog{
 
   .all_polls {
     display: grid;
-    place-content: flex-start;
-    align-items: baseline;
+    /* place-content: flex-start; */
+    /* align-items: baseline; */
 }
 .poll_container{
   display: flex;
@@ -303,6 +324,7 @@ dialog{
 @media screen and (min-width: 1025px) {
   .all_polls {
     grid-template-columns: 1fr 1fr 1fr;
+
   }
   .mobile_btn{
     display: none;
