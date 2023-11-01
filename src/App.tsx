@@ -138,7 +138,7 @@ function App() {
           <Sentry color="#49b33e" size={24} speed={.5} animating={true} />
         </div>
       </header>
-      <h3>+ On Maintenance</h3>
+      <h3>+ On Maintanence</h3>
       <p>Resume on: Nov2 6A.M</p>
       {/* {showBackDrop && <CustomBackDrop />} 
       {userName && <p className=' px-4 py-1 remaining_notice'>Remaining Vote Count for <b>{userName}</b> :- <span>{remainingSlots}</span></p>}
