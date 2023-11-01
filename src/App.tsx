@@ -27,8 +27,8 @@ function App() {
   let photoActive = {};
 
 
-  const url = "https://backend-poll.onrender.com/api";
-  // const url = "http://localhost:3000/api";
+  // const url = "https://backend-poll.onrender.com/api";
+  const url = "http://localhost:3000/api";
 
   useEffect(()=>{
     axios.get(url + "/user/" + membershipId).then(res => {
@@ -87,8 +87,8 @@ function App() {
     }
     axios.post(url + "/vote", data).then(res => {
       setPolls(res.data.data)
-      setRS(parseInt(remainingSlots-1));
-      localStorage.setItem("rs",remainingSlots-1);
+      setRS(100-parseInt(res.data.rs));
+      localStorage.setItem("rs",(100-parseInt(res.data.rs)));
     })
   }
 
@@ -140,7 +140,7 @@ function App() {
       </header>
       <h3>+ On Maintanence</h3>
       <p>Resume on: Nov2 6A.M</p>
-      {/* {showBackDrop && <CustomBackDrop />} 
+      {showBackDrop && <CustomBackDrop />} 
       {userName && <p className=' px-4 py-1 remaining_notice'>Remaining Vote Count for <b>{userName}</b> :- <span>{remainingSlots}</span></p>}
       {askMembershipId && <dialog className='flex items-center py-2 w-full h-full justify-center z-[100] backdrop:backdrop-blur-sm rounded-md'>
         <div className='flex flex-col gap-[1rem] border border-solid border-[#000] px-4 py-5'>
@@ -249,7 +249,7 @@ function App() {
             </>
 
         }
-      </div> */}
+      </div>
     </>
   )
 }
