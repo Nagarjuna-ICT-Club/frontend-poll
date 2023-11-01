@@ -137,13 +137,10 @@ function App() {
           <p>Voting open</p>
           <Sentry color="#49b33e" size={24} speed={.5} animating={true} />
         </div>
-        <a href='#' onClick={()=>{
-          localStorage.clear();
-          location.reload();
-        }}>Logout</a>
       </header>
-      {showBackDrop && <CustomBackDrop />}
-     
+      <h3>+ On Maintenance</h3>
+      <p>Resume on: Nov2 6A.M</p>
+      {/* {showBackDrop && <CustomBackDrop />} 
       {userName && <p className=' px-4 py-1 remaining_notice'>Remaining Vote Count for <b>{userName}</b> :- <span>{remainingSlots}</span></p>}
       {askMembershipId && <dialog className='flex items-center py-2 w-full h-full justify-center z-[100] backdrop:backdrop-blur-sm rounded-md'>
         <div className='flex flex-col gap-[1rem] border border-solid border-[#000] px-4 py-5'>
@@ -252,7 +249,7 @@ function App() {
             </>
 
         }
-      </div>
+      </div> */}
     </>
   )
 }
