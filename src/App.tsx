@@ -27,8 +27,8 @@ function App() {
   let photoActive = {};
 
 
-  // const url = "https://backend-poll.onrender.com/api";
-  const url = "http://localhost:3000/api";
+  const url = "https://backend-poll.onrender.com/api";
+  // const url = "http://localhost:3000/api";
 
   useEffect(()=>{
     axios.get(url + "/user/" + membershipId).then(res => {
@@ -51,7 +51,8 @@ function App() {
 
   const saveMembershipId = () => {
     setSBD(true);
-    const _refine = midInput.replace(" ", "").toUpperCase();
+    const _refine = midInput.split(" ").join("").trim().toUpperCase();
+    
     const _ = members.filter(value => {
       if (value["Membership ID"]) {
         // console.log(_refine, String(value["Membership ID"]).split(" ").join("").trim());
