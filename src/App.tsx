@@ -237,7 +237,7 @@ function App() {
                             {vlaue.voters.length}
                             <Levels />
                           </button>
-                          <button className='view_btn' onClick={() => location.href += "/?photo=" + vlaue.id}>
+                          <button className='view_btn' onClick={() => location.href = "/?photo=" + vlaue.id}>
                             View <i className="ri-link-unlink-m"></i>
                           </button>
                         </div>
