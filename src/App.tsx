@@ -29,8 +29,8 @@ function App() {
   let photoActive = {};
 
 
-//   const url = "https://backend-poll.onrender.com/api";
-  const url = "http://localhost:3000/api";
+  const url = "https://backend-poll.onrender.com/api";
+  // const url = "http://localhost:3000/api";
 
   useEffect(()=>{
     axios.get(url + "/user/" + membershipId).then(res => {
@@ -158,7 +158,11 @@ function App() {
 			<i className="ri-search-line search_btn flex items-center justify-center" onClick={filterPoll}></i>
 		</div>
       </header>
-      {showBackDrop && <CustomBackDrop />} 
+      <center>
+        <h2> {"==>>"} Major Upgrage being carried out</h2>
+        <p>Resumes on: Nov 2, 6 AM</p>
+      </center>
+      {/* {showBackDrop && <CustomBackDrop />} 
       {userName && <p className=' px-4 py-1 remaining_notice'>Remaining Vote Count for <b>{userName}</b> :- <span>{remainingSlots}</span></p>}
       {askMembershipId && <dialog className='flex items-center py-2 w-full h-full justify-center z-[100] backdrop:backdrop-blur-sm rounded-md'>
         <div className='flex flex-col gap-[1rem] border border-solid border-[#000] px-4 py-5'>
@@ -242,7 +246,7 @@ function App() {
                         <div className='author_section'>
                         <i className="ri-user-6-fill"></i>
                         <h2 className='author_name'>{getName(vlaue.author)}
-							{/* <span>{vlaue.author}</span> */}
+							<span>{vlaue.author}</span>
 						</h2>
                         </div>
                         <div className='vote_section'>
@@ -269,7 +273,7 @@ function App() {
             </>
 
         }
-      </div>
+      </div> */}
     </>
   )
 }
