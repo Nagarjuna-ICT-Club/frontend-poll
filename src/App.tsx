@@ -27,13 +27,13 @@ function App() {
   let photoActive = {};
 
 
-  const url = "https://backend-poll.onrender.com/api";
-  // const url = "http://localhost:3000/api";
+  // const url = "https://backend-poll.onrender.com/api";
+  const url = "http://localhost:3000/api";
 
   useEffect(()=>{
     axios.get(url + "/user/" + membershipId).then(res => {
-      setRS(res.data.votes);
-      localStorage.setItem('rs', res.data.votes);
+      setRS(100-parseInt(res.data.votes));
+      localStorage.setItem('rs', 100-parseInt(res.data.votes));
       setAskMembershipId(false);
       setSBD(false)
     })
@@ -60,8 +60,8 @@ function App() {
     });
     if (_.length > 0) {
       axios.get(url + "/user/" + _refine).then(res => {
-        setRS(res.data.votes);
-        localStorage.setItem('rs', res.data.votes);
+        setRS(100 - parseInt(res.data.votes));
+        localStorage.setItem('rs', 100 - parseInt(res.data.votes));
         setUserName(_[0]["Name"]);
         localStorage.setItem('name', _[0]["Name"]);
         setmembershipId(_refine);
@@ -87,8 +87,8 @@ function App() {
     }
     axios.post(url + "/vote", data).then(res => {
       setPolls(res.data.data)
-      setRS(parseInt(remainingSlots+1));
-      localStorage.setItem("rs",remainingSlots+1);
+      setRS(parseInt(remainingSlots-1));
+      localStorage.setItem("rs",remainingSlots-1);
     })
   }
 
@@ -158,8 +158,7 @@ function App() {
           />
           <button onClick={() => saveMembershipId()} className='border border-solid bg-primary text-[#fff] py-1'>SAVE</button>
         </div>
-      </dialog>}
-      
+      </dialog>}  
       { photoActive && <div className='poll_card flex single_poll py-3 px-1'>
                       <img className='flex-1 w-50' src={photoActive?.url} />
                       <div className='flex flex-col gap-1 details'>
