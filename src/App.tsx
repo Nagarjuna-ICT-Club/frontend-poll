@@ -51,7 +51,8 @@ function App() {
 
   const saveMembershipId = () => {
     setSBD(true);
-    const _refine = midInput.replace(" ", "").toUpperCase();
+    const _refine = midInput.split(" ").join("").trim().toUpperCase();
+    
     const _ = members.filter(value => {
       if (value["Membership ID"]) {
         // console.log(_refine, String(value["Membership ID"]).split(" ").join("").trim());
@@ -87,8 +88,8 @@ function App() {
     }
     axios.post(url + "/vote", data).then(res => {
       setPolls(res.data.data)
-      setRS(parseInt(remainingSlots-1));
-      localStorage.setItem("rs",remainingSlots-1);
+      setRS(100-parseInt(res.data.rs));
+      localStorage.setItem("rs",(100-parseInt(res.data.rs)));
     })
   }
 
@@ -138,9 +139,7 @@ function App() {
           <Sentry color="#49b33e" size={24} speed={.5} animating={true} />
         </div>
       </header>
-      <h3>+ On Maintanence</h3>
-      <p>Resume on: Nov2 6A.M</p>
-      {/* {showBackDrop && <CustomBackDrop />} 
+      {showBackDrop && <CustomBackDrop />} 
       {userName && <p className=' px-4 py-1 remaining_notice'>Remaining Vote Count for <b>{userName}</b> :- <span>{remainingSlots}</span></p>}
       {askMembershipId && <dialog className='flex items-center py-2 w-full h-full justify-center z-[100] backdrop:backdrop-blur-sm rounded-md'>
         <div className='flex flex-col gap-[1rem] border border-solid border-[#000] px-4 py-5'>
@@ -249,7 +248,7 @@ function App() {
             </>
 
         }
-      </div> */}
+      </div>
     </>
   )
 }
