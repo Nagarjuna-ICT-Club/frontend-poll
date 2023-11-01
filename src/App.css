@@ -242,16 +242,23 @@ dialog div {
   text-transform: uppercase;
   margin: 10px 42px;
   padding: 5px 31px;
+  position: absolute;
+  bottom: 0;
+  background-color: white;
+  border-radius: 5px;
 }
 dialog{
   position: absolute;
     height: 100vh;
     top: 0%;
 }
-.chart_on{
-  background-color: black;
-  color: white;
+
+.chart_on {
+  background-color: #000;
+  color: #fff;
+  z-index: 10;
 }
+
 
 /* media query */
 @media screen and (min-width: 769px) {

@@ -34,8 +34,8 @@ function App() {
 
   useEffect(()=>{
     axios.get(url + "/user/" + membershipId).then(res => {
-      setRS(res.data.votes);
-      localStorage.setItem('rs', res.data.votes);
+      setRS(100-parseInt(res.data.votes));
+      localStorage.setItem('rs', 100-parseInt(res.data.votes));
       setAskMembershipId(false);
       setSBD(false)
     })
@@ -54,7 +54,8 @@ function App() {
 
   const saveMembershipId = () => {
     setSBD(true);
-    const _refine = midInput.replace(" ", "").toUpperCase();
+    const _refine = midInput.split(" ").join("").trim().toUpperCase();
+    
     const _ = members.filter(value => {
       if (value["Membership ID"]) {
         // console.log(_refine, String(value["Membership ID"]).split(" ").join("").trim());
@@ -63,8 +64,8 @@ function App() {
     });
     if (_.length > 0) {
       axios.get(url + "/user/" + _refine).then(res => {
-        setRS(res.data.votes);
-        localStorage.setItem('rs', res.data.votes);
+        setRS(100 - parseInt(res.data.votes));
+        localStorage.setItem('rs', 100 - parseInt(res.data.votes));
         setUserName(_[0]["Name"]);
         localStorage.setItem('name', _[0]["Name"]);
         setmembershipId(_refine);
@@ -89,10 +90,10 @@ function App() {
       voter: membershipId
     }
     axios.post(url + "/vote", data).then(res => {
-      setPolls(res.data.data);
-	  setFilteredPolls(res.data.data);
-      setRS(parseInt(remainingSlots+1));
-      localStorage.setItem("rs",remainingSlots+1);
+      setFilteredPolls(res.data.data);
+      setPolls(res.data.data)
+      setRS(100-parseInt(res.data.rs));
+      localStorage.setItem("rs",(100-parseInt(res.data.rs)));
     })
   }
 
@@ -157,9 +158,8 @@ function App() {
 			<i className="ri-search-line search_btn flex items-center justify-center" onClick={filterPoll}></i>
 		</div>
       </header>
-      {showBackDrop && <CustomBackDrop />}
-     
-      {userName && <p className=' px-4 py-1 remaining_notice'>Remaining Vote Count for <b>{userName}</b> :- <span>{100-remainingSlots}</span></p>}
+      {showBackDrop && <CustomBackDrop />} 
+      {userName && <p className=' px-4 py-1 remaining_notice'>Remaining Vote Count for <b>{userName}</b> :- <span>{remainingSlots}</span></p>}
       {askMembershipId && <dialog className='flex items-center py-2 w-full h-full justify-center z-[100] backdrop:backdrop-blur-sm rounded-md'>
         <div className='flex flex-col gap-[1rem] border border-solid border-[#000] px-4 py-5'>
           <p>Enter your <em>Membership ID</em> to participate in this photography contest voting</p>
@@ -173,8 +173,7 @@ function App() {
           />
           <button onClick={() => saveMembershipId()} className='border border-solid bg-primary text-[#fff] py-1'>SAVE</button>
         </div>
-      </dialog>}
-      
+      </dialog>}  
       { photoActive && <div className='poll_card flex single_poll py-3 px-1'>
                       <img className='flex-1 w-50' src={photoActive?.url} />
                       <div className='flex flex-col gap-1 details'>
