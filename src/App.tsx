@@ -193,7 +193,7 @@ function App() {
           </div>
           <h2 className='date_h2'>Uploaded on: {new Date(photoActive.createdAt).toUTCString()}</h2>
           <div className='card_footer'>
-            <button className="vote_button" onClick={() => makeVote(photoActive.id)}>Vote <i className="ri-heart-add-fill"></i> </button>
+          {remainingSlots > 0 &&  <button className="vote_button" onClick={() => makeVote(vlaue.id)}>Vote <i className="ri-heart-add-fill"></i> </button> }
             <button disabled className='votes_count'>
               <i className="ri-heart-2-fill"></i>
               {photoActive.voters.length}
@@ -268,7 +268,7 @@ function App() {
                       </div>
                       <h2 className='date_h2'>Uploaded on: {new Date(vlaue.createdAt).toUTCString()}</h2>
                       <div className='card_footer'>
-                        <button className="vote_button" onClick={() => makeVote(vlaue.id)}>Vote <i className="ri-heart-add-fill"></i> </button>
+                      {remainingSlots > 0 &&  <button className="vote_button" onClick={() => makeVote(vlaue.id)}>Vote <i className="ri-heart-add-fill"></i> </button> }
                         <button disabled className='votes_count'>
                           <i className="ri-heart-2-fill"></i>
                           {vlaue.voters.length}
