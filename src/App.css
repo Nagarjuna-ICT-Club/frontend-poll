@@ -5,6 +5,11 @@ header {
   color: whitesmoke;
   padding: 10px 20px;
 }
+.top_charts img{
+  height: 80px;
+  width: 80px;
+  object-fit: cover;
+}
 .header_search_box {
 	width: 100%;
 }
@@ -123,7 +128,7 @@ header {
   padding: 10px 24px;
   background: #8a889345;
   overflow-y: scroll;
-  min-height: 100vh;
+  min-height: 80vh;
 }
 
 .all_polls {
@@ -243,9 +248,10 @@ dialog div {
   margin: 10px 42px;
   padding: 5px 31px;
   position: absolute;
-  bottom: 0;
+  bottom: 0px;
   background-color: white;
   border-radius: 5px;
+  z-index: 999;
 }
 dialog{
   position: absolute;
