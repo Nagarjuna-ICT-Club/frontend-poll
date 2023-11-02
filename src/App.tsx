@@ -47,7 +47,7 @@ function App() {
 
     axios.get(url + "/all-polls").then(res => {
       setPolls(res.data.data)
-      setFilteredPolls(res.data.data)
+	  filterPoll();
       setLoading(false);
     })
   }, [membershipId])
@@ -90,8 +90,8 @@ function App() {
       voter: membershipId
     }
     axios.post(url + "/vote", data).then(res => {
-      setFilteredPolls(res.data.data);
-      setPolls(res.data.data)
+      setPolls(res.data.data);
+	  filterPoll();
       setRS(100-parseInt(res.data.rs));
       localStorage.setItem("rs",(100-parseInt(res.data.rs)));
     })
