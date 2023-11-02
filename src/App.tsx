@@ -24,6 +24,8 @@ function App() {
   const [topChartOn, setTCO] = useState(false);
   const searchBar = useRef(null);
 
+  let filterWait = null;
+
   let params = new URLSearchParams(window.location.search).get("photo");
 
   let photoActive = {};
@@ -132,6 +134,7 @@ function App() {
   }
 
   const filterPoll = () => {
+	console.log("Filtering...");
 	let searchQuery = searchBar.current.value.replace(" ", "").toUpperCase();
 	setFilteredPolls(() => {
 		let filtered = polls.filter(poll => {
@@ -154,7 +157,14 @@ function App() {
         </div>
 		<div className="header_search_box flex">
 			<input type="text" className="search_box" placeholder='Search Contestant' ref={searchBar} 
-				onChange={e => e.target.value ? null : filterPoll()}/>
+				onChange={(e) => {
+					if(!(e.target.value)) filterPoll();
+					else
+					{
+						if(filterWait) clearTimeout(filterWait);
+						filterWait = setTimeout(() => filterPoll(), 1000);
+					}
+				}}/>
 			<i className="ri-search-line search_btn flex items-center justify-center" onClick={filterPoll}></i>
 		</div>
       </header>
