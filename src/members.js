@@ -128,6 +128,22 @@ export const members = [
     "Phone Number": 9863485408,
   },
   {
+    "S.N.": 2200,
+    Name: "Riju Bohaju",
+    "Membership ID": "CSIT RB 373",
+    Faculty: "CSIT",
+    Semester: "6th",
+    "Phone Number": 9865630599,
+  },
+  {
+    "S.N.": 2201,
+    Name: "Garima KC",
+    "Membership ID": "CSIT GK 374",
+    Faculty: "CSIT",
+    Semester: "6th",
+    "Phone Number": 9865630599,
+  },
+  {
     "S.N.": 17,
     Name: "Ranjana Bista",
     "Membership ID": "BIM RB 067",
