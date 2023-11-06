@@ -5,6 +5,9 @@ header {
   color: whitesmoke;
   padding: 10px 20px;
 }
+.all_polls{
+  display: none !important;
+}
 .top_charts img{
   height: 80px;
   width: 80px;
@@ -37,6 +40,13 @@ header {
 .single_poll{
   flex-direction: column;
 }
+.poll_card{
+  max-height: 90vh;
+}
+.poll_card img{
+  height: 51vh !important;
+  object-fit: contain !important;
+}
 .vote_section{
   display: flex;
   align-items: baseline;
@@ -45,6 +55,13 @@ header {
 .vote_section i{
   font-size: 2em;
   color: #DB4437;
+}
+.swiper-wrapper{
+  max-height: 85vh;
+}
+.swiper-scrollbar{
+  position: absolute;
+  top: 0px !important;
 }
 .author_section{
   display: flex;
@@ -81,6 +98,7 @@ header {
   font-size: 12px;
   font-weight: 900;
   border-radius: 18px;
+  right: 0;
 }
 .chart_card{
   margin: 5px 0;
@@ -150,17 +168,36 @@ header {
   background: antiquewhite;
   padding: 5px;
 }
-
+.swiper-button-prev:after, .swiper-button-next:after {
+  font-family: swiper-icons;
+  text-transform: none !important;
+  letter-spacing: 0;
+  font-variant: initial;
+  line-height: 1;
+  font-size: 20px !important;
+  background: #b4b7b7;
+  padding: 7px 12px;
+  border-radius: 50%;
+  text-align: center;
+  color: white;
+}
+.black{
+  color: black !important;
+}
+.black:hover{
+  color: white !important;
+}
 
 .vote_button {
-  font-size: 14px;
-  padding: 5px 30px;
+
+  padding: 0px 10px;
   outline: none;
-  background-color: #DB4437;
-  color: white;
+  background-color: #e8e2e2;
+  color: #DB4437;
   border: 1px sold black;
-  border-radius: 5px;
+  border-radius: 50%;
   cursor: pointer;
+  font-size: 38px;
 }
 .date_h2{
   text-align: center;
@@ -199,9 +236,10 @@ header {
 
 .card_footer {
   display: flex;
-  gap: 16px;
+  gap: 26px;
   align-items: center;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .custom_backdrop {
@@ -268,6 +306,10 @@ dialog{
 
 /* media query */
 @media screen and (min-width: 769px) {
+
+  .custom_swiper{
+    width: 60vw;
+  }
   
   .mobile_btn{
     display: none;
@@ -296,6 +338,7 @@ dialog{
 .top_charts{
   display: block;
   min-height: 60vh !important;
+  width: 30vw;
 }
 
 
