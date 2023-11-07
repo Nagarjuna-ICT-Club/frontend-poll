@@ -251,7 +251,7 @@ function App() {
                       <h2 className='date_h2'>Uploaded on: {new Date(vlaue.createdAt).toUTCString()}</h2>
                       <div className='card_footer'>
                         {<button className="vote_button" onClick={() => makeVote(vlaue.id)}>Vote <i className="ri-heart-add-fill"></i> </button>}
-                        <button disabled className='votes_count'>
+                        <button className='votes_count'>
                           <i className="ri-heart-2-fill"></i>
                           {vlaue.voters}
                           <Levels />
@@ -304,8 +304,8 @@ function App() {
                   </div>
                   <h2 className='date_h2'>Uploaded on: {new Date(photoActive.createdAt).toUTCString()}</h2>
                   <div className='card_footer'>
-                    {remainingSlots > 0 && <button className="vote_button" onClick={() => makeVote(vlaue.id)} disabled> <i className="ri-heart-add-fill"></i> </button>}
-                    <button disabled className='votes_count'>
+                    {remainingSlots > 0 && <button className="vote_button" onClick={() => makeVote(vlaue.id)} > <i className="ri-heart-add-fill"></i> </button>}
+                    <button className='votes_count'>
                       <i className="ri-heart-2-fill"></i>
                       {photoActive.voters}
                       <Levels />
@@ -352,7 +352,7 @@ function App() {
 
                         <div className='card_footer'>
 
-                          {<button className="vote_button" onClick={() => makeVote(vlaue.id)} disabled><i className="ri-heart-add-fill"></i> </button>}
+                          {<button className="vote_button" onClick={() => makeVote(vlaue.id)} ><i className="ri-heart-add-fill"></i> </button>}
                           {<button className="vote_button black" onClick={() => {
                             navigator.clipboard.writeText("https://contest.nagarjunaictclub.com/?photo=" + vlaue.id)
                             toast.success("Link Copied to Clipboard", {
