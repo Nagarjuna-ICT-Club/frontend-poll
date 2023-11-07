@@ -16,7 +16,7 @@ Popularity of phographs/contestants is determined by the nauture of voters/club 
 
 Points for each votes is assigned as:
 - Voter from same semester/class = 1 points
-- Voter from same faculty and same semester = 2 points
+- Voter from same faculty and not same semester = 2 points
 - Voter from different faculty = 3 points
 
 ### Algorithm
