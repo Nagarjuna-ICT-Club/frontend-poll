@@ -250,7 +250,7 @@ function App() {
                         {<button className="vote_button" onClick={() => makeVote(vlaue.id)}>Vote <i className="ri-heart-add-fill"></i> </button>}
                         <button disabled className='votes_count'>
                           <i className="ri-heart-2-fill"></i>
-                          {vlaue.voters.length}
+                          {vlaue.voters}
                           <Levels />
                         </button>
                         <button className='view_btn' onClick={() => location.href = "/?photo=" + vlaue.id}>
