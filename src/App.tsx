@@ -93,20 +93,23 @@ function App() {
 
 
   const makeVote = (photoId: string) => {
+    toast("Voting Closed",{type:"info",position:"bottom-center"})
+    return;
     if (!membershipId) {
       setAskMembershipId(true);
       return;
     }
+
     const data = {
       id: photoId,
       voter: membershipId
     }
-    axios.post(url + "/vote", data).then(res => {
-      setFilteredPolls(res.data.data);
-      setPolls(res.data.data)
-      setRS(100 - parseInt(res.data.rs));
-      localStorage.setItem("rs", (100 - parseInt(res.data.rs)));
-    }).catch(er=>toast(er.response.data.message,{type:"error",position:"bottom-center"}))
+    // axios.post(url + "/vote", data).then(res => {
+    //   setFilteredPolls(res.data.data);
+    //   setPolls(res.data.data)
+    //   setRS(100 - parseInt(res.data.rs));
+    //   localStorage.setItem("rs", (100 - parseInt(res.data.rs)));
+    // }).catch(er=>toast(er.response.data.message,{type:"error",position:"bottom-center"}))
   }
 
   const getName = (id) => {
@@ -162,10 +165,10 @@ function App() {
         {/* <div className='heading_container'>
           <h2>Nagarjuna ICT Club - Photography Contest</h2>
         </div> */}
-        <div className="header_search_area flex items-center gap-[1rem]">
-          <p>Voting open</p>
-          <Sentry color="#49b33e" size={24} speed={.5} animating={true} />
-          <Countdown date={Date.now() + (86400 / 24) * 10 * 1000} />
+        <div className="header_search_area flex items-center gap-[1rem] text-center">
+          <p>Voting Closed</p>
+          {/* <Sentry color="#49b33e" size={24} speed={.5} animating={true} /> */}
+          {/* <Countdown date={Date.now() + (86400 / 24) * 10 * 1000} /> */}
         </div>
         <div className="header_search_box flex">
           <input type="text" className="search_box" placeholder='Search Contestant' ref={searchBar}
@@ -301,7 +304,7 @@ function App() {
                   </div>
                   <h2 className='date_h2'>Uploaded on: {new Date(photoActive.createdAt).toUTCString()}</h2>
                   <div className='card_footer'>
-                    {remainingSlots > 0 && <button className="vote_button" onClick={() => makeVote(vlaue.id)}> <i className="ri-heart-add-fill"></i> </button>}
+                    {remainingSlots > 0 && <button className="vote_button" onClick={() => makeVote(vlaue.id)} disabled> <i className="ri-heart-add-fill"></i> </button>}
                     <button disabled className='votes_count'>
                       <i className="ri-heart-2-fill"></i>
                       {photoActive.voters}
@@ -349,7 +352,7 @@ function App() {
 
                         <div className='card_footer'>
 
-                          {<button className="vote_button" onClick={() => makeVote(vlaue.id)}><i className="ri-heart-add-fill"></i> </button>}
+                          {<button className="vote_button" onClick={() => makeVote(vlaue.id)} disabled><i className="ri-heart-add-fill"></i> </button>}
                           {<button className="vote_button black" onClick={() => {
                             navigator.clipboard.writeText("https://contest.nagarjunaictclub.com/?photo=" + vlaue.id)
                             toast.success("Link Copied to Clipboard", {
