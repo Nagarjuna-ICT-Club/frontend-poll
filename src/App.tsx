@@ -343,8 +343,8 @@ function App() {
 
                           {<button className="vote_button" onClick={() => makeVote(vlaue.id)} ><i className="ri-heart-add-fill"></i> </button>}
                           {<button className="vote_button black" onClick={() => {
-                            navigator.clipboard.writeText("https://contest.nagarjunaictclub.com/?photo=" + vlaue.id)
-                            toast.success("Link Copied to Clipboard", {
+                            navigator.clipboard.writeText(vlaue.id)
+                            toast.success("Poll ID Copied", {
                               position: "bottom-center",
                               type: "success"
                             })
