@@ -55,8 +55,10 @@ function App() {
         setAskMembershipId(false);
         setSBD(false)
       })
-      if (!polls) {
+   
+      if (polls.length==0) {
         axios.get(url + "/all-polls").then(res => {
+          console.log(res)
           setPolls(res.data.data)
           localStorage.setItem("_polls_", JSON.stringify(res.data.data));
           setFilteredPolls(res.data.data)
@@ -67,10 +69,9 @@ function App() {
   }, [membershipId, polls])
 
   useEffect(() => {
-    console.log(topChart)
-    // if(!topChart){
-    //   getTopChart();
-    // }
+    if(topChart.length==0){
+      getTopChart();
+    }
   }, [topChart])
 
   const saveMembershipId = () => {
