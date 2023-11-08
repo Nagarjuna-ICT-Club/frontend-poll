@@ -18,9 +18,10 @@ import ProgressBar from "@ramonak/react-progress-bar";
 
 
 function App() {
-  const [polls, setPolls] = useState([]);
-  const [filteredPolls, setFilteredPolls] = useState([]);
+  const [polls, setPolls] = useState(JSON.parse(localStorage.getItem("_polls_")) || []);
+  const [filteredPolls, setFilteredPolls] = useState(JSON.parse(localStorage.getItem("_polls_")) || []);
   const [loading, setLoading] = useState(true);
+  const [chooseContestant, setCC] = useState(false);
   const [membershipId, setmembershipId] = useState(localStorage.getItem('mid') || "");
   const [askMembershipId, setAskMembershipId] = useState(() => {
     return localStorage.getItem("mid") ? false : true
@@ -31,15 +32,17 @@ function App() {
   const [showBackDrop, setSBD] = useState(false)
   const [topChartOn, setTCO] = useState(false);
   const searchBar = useRef(null);
-  const [topChart, setTopChart] = useState([]);
+  const [topChart, setTopChart] = useState(JSON.parse(localStorage.getItem("_rank_")) || []);
+
+  const [showContestantPolls, setSCP] = useState(false)
 
   let params = new URLSearchParams(window.location.search).get("photo");
 
   let photoActive = {};
 
 
-  const url = "https://backend-poll.onrender.com/api";
-  // const url = "http://localhost:3000/api";
+  // const url = "https://backend-poll.onrender.com/api";
+  const url = "http://localhost:3000/api";
 
 
   useEffect(() => {
@@ -52,17 +55,23 @@ function App() {
         setAskMembershipId(false);
         setSBD(false)
       })
-      axios.get(url + "/all-polls").then(res => {
-        setPolls(res.data.data)
-        setFilteredPolls(res.data.data)
-        setLoading(false);
-      })
+      if (!polls) {
+        axios.get(url + "/all-polls").then(res => {
+          setPolls(res.data.data)
+          localStorage.setItem("_polls_", JSON.stringify(res.data.data));
+          setFilteredPolls(res.data.data)
+        })
+      }
+      setLoading(false);
     }
-  }, [membershipId])
+  }, [membershipId, polls])
 
   useEffect(() => {
-    getTopChart();
-  }, [])
+    console.log(topChart)
+    // if(!topChart){
+    //   getTopChart();
+    // }
+  }, [topChart])
 
   const saveMembershipId = () => {
     setSBD(true);
@@ -93,7 +102,7 @@ function App() {
 
 
   const makeVote = (photoId: string) => {
-    toast("Voting Closed",{type:"info",position:"bottom-center"})
+    toast("Voting Closed", { type: "info", position: "bottom-center" })
     return;
     if (!membershipId) {
       setAskMembershipId(true);
@@ -145,6 +154,8 @@ function App() {
       let _data = res.data;
       _data = _data.sort((a, b) => b.popularity - a.popularity)
       setTopChart(_data)
+      localStorage.setItem("_rank_", JSON.stringify(_data))
+      setLoading(false)
     })
   }
 
@@ -159,29 +170,30 @@ function App() {
     });
   }
 
+  const handleAuhtorClick = (author) => {
+    setFilteredPolls(() => {
+      const filtered = polls.filter(poll => {
+        if(poll.author==author) return true;
+      });
+      return filtered;
+    });
+    setSCP(true);
+    // setCC(tru);
+  }
+
   return (
     <>
       <header className='flex items-center justify-between'>
-        {/* <div className='heading_container'>
-          <h2>Nagarjuna ICT Club - Photography Contest</h2>
-        </div> */}
-        <div className="header_search_area flex items-center gap-[1rem] text-center">
-          <p>Voting Closed</p>
-          {/* <Sentry color="#49b33e" size={24} speed={.5} animating={true} /> */}
-          {/* <Countdown date={Date.now() + (86400 / 24) * 10 * 1000} /> */}
-        </div>
-        <div className="header_search_box flex">
-          <input type="text" className="search_box" placeholder='Search Contestant' ref={searchBar}
-            onChange={e => e.target.value ? null : filterPoll()} />
-          <i className="ri-search-line search_btn flex items-center justify-center" onClick={filterPoll}></i>
-        </div>
+        <span>TAKE THE SHOT <br />NAGARJUNA ICT CLUB</span>
+        {userName && <p className='remaining_notice'>
+          <i className="ri-shield-user-line"></i>
+          {userName}</p>}
       </header>
       {/* <center>
         <h2> {"==>>"} Major Upgrage being carried out</h2>
         <p>Resumes on: Nov 2, 6 AM</p>
       </center> */}
       {showBackDrop && <CustomBackDrop />}
-      {userName && <p className=' px-4 py-1 remaining_notice'><b>{userName}</b></p>}
       {askMembershipId && <dialog className='flex items-center py-2 w-full h-full justify-center z-[100] backdrop:backdrop-blur-sm rounded-md'>
         <div className='flex flex-col gap-[1rem] border border-solid border-[#000] px-4 py-5'>
           <p>Enter your <em>Membership ID</em> to participate in this photography contest voting</p>
@@ -196,13 +208,29 @@ function App() {
           <button onClick={() => saveMembershipId()} className='border border-solid bg-primary text-[#fff] py-1'>SAVE</button>
         </div>
       </dialog>}
-
-      {<button className={`${topChartOn ? 'chart_on' : ''} mobile_btn`} onClick={() => setTCO(!topChartOn)}>{topChartOn ? <span><i className="ri-polaroid-2-line"></i> show all polls</span> : <span><i className="ri-line-chart-line"></i> show top chart</span>}</button>}
+      <div className='btn_area'>
+        {<button className={`${topChartOn ? 'chart_on' : ''} mobile_btn ${chooseContestant ? 'btn_v2' : ''}`} onClick={() => {setTCO(!topChartOn), setCC(false), setFilteredPolls(polls),setSCP(false)}}>{topChartOn ? <span><i className="ri-polaroid-2-line"></i> All Polls </span> : <span><i className="ri-line-chart-line"></i>Top chart</span>}</button>}
+        {<button className={`${topChartOn ? 'chart_on' : ''} mobile_btn  ${!chooseContestant ? 'btn_v2' : ''} `} onClick={() => {setCC(true), setTCO(false), setSCP(false)}}>{<span><i className="ri-polaroid-2-line"></i>By Contestants</span>}</button>}
+      </div>
       <div className='poll_container py-3 '>
+        {(chooseContestant && !showContestantPolls) && <div>
+          <p className='tips'>Tips: Click to view all posts by a contestant</p>
+          <div className='contestant_list'>
+         
+            {topChart.map((top,key)=>{
+             return <div className='contestant_card' key={key} onClick={()=>handleAuhtorClick(top.author)}>
+                <p className='author_name'>{top.author}<span>{getName(top.author)}</span></p>
+                <i className="ri-external-link-line"></i>
+              </div>
+            })}
+          </div>
+          </div>}
+          
+          
         {loading ? <div> <CustomBackDrop color={"white"} /> </div> :
           !askMembershipId &&
           <>
-            {!loading && <div className={topChartOn ? 'top_charts active' : 'top_charts'}>
+            {!loading && <div className={(topChartOn && !chooseContestant && !showContestantPolls) ? 'top_charts active' : 'top_charts'}>
               <h2>Top Chart</h2>
               {topChart.map((top, key) => {
                 if (top.votes > 0) {
@@ -224,47 +252,7 @@ function App() {
                 }
               })}
             </div>}
-
-            <div className='all_polls scrollbar'>
-              {
-                filteredPolls.map((vlaue, k) => {
-                  return <div key={k} className='poll_card flex flex-col gap-1'>
-                    {/* <img src={vlaue?.url} /> */}
-                    <LazyLoadImage
-                      alt={vlaue.id}
-                      effect="blur"
-                      src={vlaue.url}
-
-                    />
-                    <div className='flex flex-col gap-1'>
-                      <span className='photo_id'>{vlaue.id}</span>
-                      <div className='author_section'>
-                        <i className="ri-user-6-fill"></i>
-                        <h2 className='author_name'>{getName(vlaue.author)}
-                          <span>{vlaue.author}</span>
-                        </h2>
-                      </div>
-                      <div className='vote_section'>
-                        <i className="ri-heart-2-fill"></i>
-                        <h2 className='vote_count'>{vlaue.voters}<span>Likes</span></h2>
-                      </div>
-                      <h2 className='date_h2'>Uploaded on: {new Date(vlaue.createdAt).toUTCString()}</h2>
-                      <div className='card_footer'>
-                        {<button className="vote_button" onClick={() => makeVote(vlaue.id)}>Vote <i className="ri-heart-add-fill"></i> </button>}
-                        <button disabled className='votes_count'>
-                          <i className="ri-heart-2-fill"></i>
-                          {vlaue.voters}
-                          <Levels />
-                        </button>
-                        <button className='view_btn' onClick={() => location.href = "/?photo=" + vlaue.id}>
-                          View <i className="ri-link-unlink-m"></i>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                })
-              }
-            </div>
+            {((!chooseContestant && !topChartOn) || showContestantPolls) &&
             <Swiper
               modules={[Navigation, Scrollbar, A11y, Autoplay, Keyboard]}
               spaceBetween={50}
@@ -304,8 +292,8 @@ function App() {
                   </div>
                   <h2 className='date_h2'>Uploaded on: {new Date(photoActive.createdAt).toUTCString()}</h2>
                   <div className='card_footer'>
-                    {remainingSlots > 0 && <button className="vote_button" onClick={() => makeVote(vlaue.id)} disabled> <i className="ri-heart-add-fill"></i> </button>}
-                    <button disabled className='votes_count'>
+                    {remainingSlots > 0 && <button className="vote_button" onClick={() => makeVote(vlaue.id)} > <i className="ri-heart-add-fill"></i> </button>}
+                    <button className='votes_count'>
                       <i className="ri-heart-2-fill"></i>
                       {photoActive.voters}
                       <Levels />
@@ -352,7 +340,7 @@ function App() {
 
                         <div className='card_footer'>
 
-                          {<button className="vote_button" onClick={() => makeVote(vlaue.id)} disabled><i className="ri-heart-add-fill"></i> </button>}
+                          {<button className="vote_button" onClick={() => makeVote(vlaue.id)} ><i className="ri-heart-add-fill"></i> </button>}
                           {<button className="vote_button black" onClick={() => {
                             navigator.clipboard.writeText("https://contest.nagarjunaictclub.com/?photo=" + vlaue.id)
                             toast.success("Link Copied to Clipboard", {
@@ -371,6 +359,7 @@ function App() {
                 })
               }
             </Swiper>
+}
           </>
 
         }
