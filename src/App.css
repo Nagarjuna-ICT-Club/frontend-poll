@@ -6,7 +6,7 @@ header {
 }
 .text-small-link{
   font-size: 11px;
-  
+  margin-left: 10px;
 }
 .contestant_card{
   display: flex;
