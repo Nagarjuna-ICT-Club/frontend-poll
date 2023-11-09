@@ -4,6 +4,10 @@ header {
   background-color: whitesmoke;
   padding: 10px 20px;
 }
+.text-small-link{
+  font-size: 11px;
+  
+}
 .contestant_card{
   display: flex;
   padding: 10px;

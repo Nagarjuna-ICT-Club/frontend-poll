@@ -189,6 +189,7 @@ function App() {
         {userName && <p className='remaining_notice'>
           <i className="ri-shield-user-line"></i>
           {userName}</p>}
+          <a href='https://docs.google.com/document/d/1Gciww6CGFk1Yg6yxJNX_2MWJe7E9g0DFpW9L9XVkwSo/edit?usp=sharing' target='_blank' className='text-small-link'>Judging criteria and guidelines</a>
       </header>
       {/* <center>
         <h2> {"==>>"} Major Upgrage being carried out</h2>
